@@ -24,10 +24,8 @@ class Player {
     parentElm.appendChild(this.domElement);
   }
   moveLeft() {
-    if (this.positionX >= 0) {
-      this.positionX--;
-      this.domElement.style.left = this.positionX + "vw";
-    }
+    this.positionX--;
+    this.domElement.style.left = this.positionX + "vw";
   }
   moveRight() {
     this.positionX++;
@@ -70,17 +68,26 @@ const player = new Player();
 
 const obstaclesArr = []; //will store instances of the class Obstacle
 
-// create enemies
+// create obstacles
 setInterval(() => {
   const newObstacle = new Obstacle();
   obstaclesArr.push(newObstacle);
-  console.log("we've created a new obstacle.... ", obstaclesArr.length);
-}, 2000);
+}, 3000);
 
-//
+// move all obstacles
 setInterval(() => {
-  obstaclesArr.forEach((element) => {
-    element.moveDown();
+  obstaclesArr.forEach((obstacleInstance) => {
+    obstacleInstance.moveDown();
+
+    if (
+      player.positionX < obstacleInstance.positionX + obstacleInstance.width &&
+      player.positionX + player.width > obstacleInstance.positionX &&
+      player.positionY < obstacleInstance.positionY + obstacleInstance.height &&
+      player.positionY + player.height > obstacleInstance.positionY
+    ) {
+      // Collision detected!
+      location.href = "./gameover.html";
+    }
   });
 }, 100);
 

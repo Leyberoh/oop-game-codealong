@@ -1,9 +1,9 @@
 class Player {
   constructor() {
-    this.positionX = 50;
-    this.positionY = 0;
     this.width = 20;
     this.height = 10;
+    this.positionX = 50 - this.width / 2;
+    this.positionY = 0;
     this.domElement = null;
 
     this.createDomElement();
@@ -24,21 +24,25 @@ class Player {
     parentElm.appendChild(this.domElement);
   }
   moveLeft() {
-    this.positionX--;
-    this.domElement.style.left = this.positionX + "vw";
+    if (this.positionX > 0) {
+      this.positionX--;
+      this.domElement.style.left = this.positionX + "vw";
+    }
   }
   moveRight() {
-    this.positionX++;
-    this.domElement.style.left = this.positionX + "vw";
+    if (this.positionX < 100 - this.width) {
+      this.positionX++;
+      this.domElement.style.left = this.positionX + "vw";
+    }
   }
 }
 
 class Obstacle {
   constructor() {
-    this.positionX = 50;
-    this.positionY = 100;
     this.width = 20;
     this.height = 10;
+    this.positionX = Math.floor(Math.random() * (100 - this.width - 0 + 1)) + 0;
+    this.positionY = 100;
     this.domElement = null;
 
     this.createDomElement();
@@ -86,6 +90,7 @@ setInterval(() => {
       player.positionY + player.height > obstacleInstance.positionY
     ) {
       // Collision detected!
+      console.log("Game Over");
       location.href = "./gameover.html";
     }
   });

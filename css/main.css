@@ -4,17 +4,23 @@ body {
 }
 
 #board {
-    background-color: aliceblue;
+    background-color: rgb(172, 201, 213);
     height: 100vh;
     position: relative;
+    overflow: hidden;
 }
 
 #player {
-    background-color: orange;
+    background-color: rgb(255, 0, 166);
     position: absolute;
 }
 
 .obstacle {
-    background-color: red;
+    background-color: rgb(90, 19, 156);
     position: absolute;
+}
+
+#page-gameover {
+    text-align: center;
+    background-color: rgb(166, 161, 171);
 }

@@ -24,16 +24,12 @@ class Player {
     parentElm.appendChild(this.domElement);
   }
   moveLeft() {
-    if (this.positionX > 0) {
-      this.positionX--;
-      this.domElement.style.left = this.positionX + "vw";
-    }
+    this.positionX--;
+    this.domElement.style.left = this.positionX + "vw";
   }
   moveRight() {
-    if (this.positionX < 100 - this.width) {
-      this.positionX++;
-      this.domElement.style.left = this.positionX + "vw";
-    }
+    this.positionX++;
+    this.domElement.style.left = this.positionX + "vw";
   }
 }
 
@@ -41,7 +37,7 @@ class Obstacle {
   constructor() {
     this.width = 20;
     this.height = 10;
-    this.positionX = Math.floor(Math.random() * (100 - this.width - 0 + 1)) + 0;
+    this.positionX = Math.floor(Math.random() * (100 - this.width + 1)); // random number between 0 and (100 - width)
     this.positionY = 100;
     this.domElement = null;
 
@@ -81,8 +77,16 @@ setInterval(() => {
 // move all obstacles
 setInterval(() => {
   obstaclesArr.forEach((obstacleInstance) => {
+    // move
     obstacleInstance.moveDown();
 
+    // remove if outside
+    if (obstacleInstance.positionY < 0 - obstacleInstance.height) {
+      obstacleInstance.domElement.remove(); //remove from the dom
+      obstaclesArr.shift(); // remove from the array
+    }
+
+    // detect collision
     if (
       player.positionX < obstacleInstance.positionX + obstacleInstance.width &&
       player.positionX + player.width > obstacleInstance.positionX &&
@@ -90,8 +94,8 @@ setInterval(() => {
       player.positionY + player.height > obstacleInstance.positionY
     ) {
       // Collision detected!
-      console.log("Game Over");
-      location.href = "./gameover.html";
+      console.log("game over my fren! ");
+      // location.href = "./gameover.html";
     }
   });
 }, 100);
